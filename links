@@ -1,0 +1,27 @@
+// File format looks like:
+https://google.com "Site up"
+https://google.com
+https://yahoo.com
+https://apple.com "Site down"
+https://apple.com
+
+# -F can be '\t', $2 is the empty field column
+$ cat links.txt | awk -F' ' '$2'
+https://google.com "Site up"
+https://apple.com "Site down"
+
+======================================
+// File format looks like:
+<a href="https://google.com">Link here</a>
+<a href="https://google.com">Link here</a>
+<a href="https://about.com">Link here</a>
+<a href="https://apple.com">Link here</a>
+<a href="https://apple.com">Link here</a>
+
+
+$ grep "<a href=" links.txt | sed 's/\"/\"><\/a>\n/2' | grep href | sort | uniq
+<a href="https://about.com"></a>
+<a href="https://apple.com"></a>
+<a href="https://google.com"></a>
+======================================
+
